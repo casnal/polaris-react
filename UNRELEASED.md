@@ -22,7 +22,7 @@ Use [the changelog guidelines](https://git.io/polaris-changelog-guidelines) to f
 - Fixed `ResourceList.Item` interaction states from being incorrectly applied ([#1312](https://github.com/Shopify/polaris-react/pull/1312)
 - Fixed selected state for date picker in windows high contrast mode ([#1342](https://github.com/Shopify/polaris-react/pull/1342))
 - Added background into media query for Microsoft high contrast to fix skeleton accessibility. ([#1341](https://github.com/Shopify/polaris-react/pull/1341))
-- Fix specificity for child selector in TextContainer ([#1357](https://github.com/Shopify/polaris-react/pull/1357))
+- Fixed a regression introduced in Polaris v3 where certain children of a `TextContainer` would have no top margin ([#1357](https://github.com/Shopify/polaris-react/pull/1357))
 
 ### Documentation
 
