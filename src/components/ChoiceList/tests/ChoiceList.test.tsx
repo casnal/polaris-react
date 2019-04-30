@@ -271,21 +271,13 @@ describe('<ChoiceList />', () => {
       const choiceElements = shallowWithAppProvider(
         <ChoiceList selected={[]} choices={choices} />,
       ).find(RadioButton);
-      let name: string;
 
       choiceElements.forEach((choiceElement) => {
-        const choiceName = choiceElement.prop<string>('name');
-        if (name == null) {
-          name = choiceName;
-        } else {
-          expect(choiceName).toBe(name);
-        }
-
-        expect(typeof choiceName).toBe('string');
+        expect(typeof choiceElement.prop<string>('name')).toBe('string');
       });
     });
 
-    it('uses the same name for every choice', () => {
+    it('uses the same name for choices', () => {
       const name = 'MyChoiceList';
       const choiceElements = shallowWithAppProvider(
         <ChoiceList name={name} selected={[]} choices={choices} />,
