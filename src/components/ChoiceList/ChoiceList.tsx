@@ -59,9 +59,7 @@ function ChoiceList({
   error,
   name = getUniqueID(),
 }: CombinedProps) {
-  const ControlComponent: typeof Checkbox | typeof RadioButton = allowMultiple
-    ? Checkbox
-    : RadioButton;
+  const ControlComponent: any = allowMultiple ? Checkbox : RadioButton;
 
   const finalName = allowMultiple ? `${name}[]` : name;
 

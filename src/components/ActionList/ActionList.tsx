@@ -30,7 +30,7 @@ export default function ActionList({
   }
 
   const hasMultipleSections = finalSections.length > 1;
-  const Element: string = hasMultipleSections ? 'ul' : 'div';
+  const Element: any = hasMultipleSections ? 'ul' : 'div';
   const sectionMarkup = finalSections.map((section, index) => {
     return (
       <Section
