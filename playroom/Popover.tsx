@@ -1,18 +1,15 @@
 import * as React from 'react';
 
-import {ReactComponent} from '@shopify/react-utilities/types';
-import compose from '@shopify/react-compose';
-
-import {WithContextTypes} from '../src/types';
-import {withContext, Popover, PopoverProps, ButtonProps} from '../src';
-import {Omit, ToggleStateContext} from './types';
-
-import {PlayToggleStateConsumer} from './ToggleState';
-import PlayToggleButton from './ToggleButton';
+import {Button, Popover, PopoverProps, ButtonProps} from '../src';
+import {Omit} from './types';
 
 interface PlayPopoverActivatorProps
   extends Omit<ButtonProps, 'children' | 'onClick'> {
   content: string;
+}
+
+interface State {
+  active: boolean;
 }
 
 interface PlayPopoverProps
@@ -20,30 +17,40 @@ interface PlayPopoverProps
   activator: PlayPopoverActivatorProps;
 }
 
-type ComposedPlayPopoverProps = WithContextTypes<ToggleStateContext> &
-  PlayPopoverProps;
+export default class PlayPopover extends React.Component<
+  PlayPopoverProps,
+  State
+> {
+  state: State = {
+    active: false,
+  };
 
-function PlayPopover(props: ComposedPlayPopoverProps) {
-  const {
-    context: {active, toggleState},
-    activator: {content, ...restOfActivatorProps},
-    ...restOfPopoverProps
-  } = props;
+  render() {
+    const {
+      props: {
+        activator: {content, ...restOfActivatorProps},
+        ...restOfPopoverProps
+      },
+      state: {active},
+      toggleActive,
+    } = this;
 
-  return (
-    <Popover
-      activator={
-        <PlayToggleButton {...restOfActivatorProps}>{content}</PlayToggleButton>
-      }
-      active={active}
-      onClose={toggleState}
-      {...restOfPopoverProps}
-    />
-  );
+    return (
+      <Popover
+        activator={
+          <Button {...restOfActivatorProps} onClick={toggleActive}>
+            {content}
+          </Button>
+        }
+        active={active}
+        onClose={toggleActive}
+        {...restOfPopoverProps}
+      />
+    );
+  }
+
+  private toggleActive = () => {
+    const {active} = this.state;
+    this.setState({active: !active});
+  };
 }
-
-export default compose<PlayPopoverProps>(
-  withContext<PlayPopoverProps, {}, ToggleStateContext>(
-    PlayToggleStateConsumer,
-  ),
-)(PlayPopover) as ReactComponent<PlayPopoverProps>;
