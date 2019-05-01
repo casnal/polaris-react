@@ -42,6 +42,7 @@ function ProgressBar({
     <div className={className}>
       <progress className={styles.Progress} value={parsedProgress} max="100" />
       <div className={styles.Indicator} style={{width: `${parsedProgress}%`}}>
+        {/* eslint-disable-next-line shopify/jsx-no-hardcoded-content */}
         <span className={styles.Label}>{parsedProgress}%</span>
       </div>
     </div>
