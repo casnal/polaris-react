@@ -31,6 +31,8 @@ export interface Props extends React.HTMLProps<HTMLDivElement> {
   shadow?: boolean;
   /** Slightly hints content upon mounting when scrollable */
   hint?: boolean;
+  /** Prevent the ability to scroll the scroll area */
+  lock?: boolean;
   /** Called when scrolled to the bottom of the scroll area */
   onScrolledToBottom?(): void;
 }
@@ -122,6 +124,7 @@ class Scrollable extends React.Component<CombinedProps, State> {
       vertical = true,
       shadow,
       hint,
+      lock,
       onScrolledToBottom,
       polaris,
       ...rest
@@ -135,6 +138,16 @@ class Scrollable extends React.Component<CombinedProps, State> {
       topShadow && styles.hasTopShadow,
       bottomShadow && styles.hasBottomShadow,
     );
+
+    if (lock === true) {
+      console.log('LOCK', lock);
+      this.toggleLock();
+    } else if (lock === false) {
+      console.log('UNLOCK', lock);
+      this.toggleLock(false);
+    } else {
+      console.log('nothing should happen with toggleLock');
+    }
 
     return (
       <div
@@ -227,14 +240,18 @@ class Scrollable extends React.Component<CombinedProps, State> {
 
   private toggleLock(shouldLock = true) {
     const {scrollArea} = this;
+
     if (scrollArea == null) {
+      console.log('scrollArea is null', scrollArea);
       return;
     }
 
     EVENTS_TO_LOCK.forEach((eventName) => {
       if (shouldLock) {
+        console.log('shouldLock', eventName);
         addEventListener(scrollArea, eventName, prevent);
       } else {
+        console.log('removing listener for:', eventName);
         removeEventListener(scrollArea, eventName, prevent);
       }
     });
